@@ -1,6 +1,6 @@
 exports.run = {
-   usage: ['ai'],
-   use: 'prompt',
+   usage: ['bard'],
+   use: 'query',
    category: 'utilities',
    async: async (m, {
       client,
@@ -10,9 +10,9 @@ exports.run = {
       Func
    }) => {
       try {
-         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'hi'), m)
+         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'apa itu kucing'), m)
          client.sendReact(m.chat, '🕒', m.key)
-         const json = await Api.neoxr('/gpt-pro', {
+         const json = await Api.neoxr('/bard', {
             q: text
          })
          if (!json.status) return client.reply(m.chat, Func.jsonFormat(json), m)

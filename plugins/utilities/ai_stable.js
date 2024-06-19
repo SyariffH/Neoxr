@@ -1,5 +1,5 @@
 exports.run = {
-   usage: ['ai'],
+   usage: ['stablediff'],
    use: 'prompt',
    category: 'utilities',
    async: async (m, {
@@ -10,13 +10,14 @@ exports.run = {
       Func
    }) => {
       try {
-         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'hi'), m)
+         if (!text) return client.reply(m.chat, Func.example(isPrefix, command, 'black cat'), m)
          client.sendReact(m.chat, '🕒', m.key)
-         const json = await Api.neoxr('/gpt-pro', {
+         const json = await Api.neoxr('/diffusion', {
             q: text
          })
          if (!json.status) return client.reply(m.chat, Func.jsonFormat(json), m)
-         client.reply(m.chat, json.data.message, m)
+         const src = Func.random(json.data)
+         client.sendFile(m.chat, src.url, '', '', m)
       } catch (e) {
          client.reply(m.chat, Func.jsonFormat(e), m)
       }
